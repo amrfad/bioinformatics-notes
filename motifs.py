@@ -45,6 +45,37 @@ def score(motifs: list):
                 score += count[sym][i]
     return score
 
+def pr(text: str, profile: dict):
+    pr = 1
+    for i, sym in enumerate(text):
+        pr *= profile[sym][i]
+    return pr
+
+def profile_most_probable_kmer(text: str, k: int, profile: list):
+    n = len(text)
+    prob = -1
+    kmer = text[0:k]
+    for i in range(n-k+1):
+        pattern = text[i:i+k]
+        if pr(pattern, profile) > prob:
+            prob = pr(pattern, profile)
+            kmer = pattern
+    return kmer
+
+def greedy_motif_search(dna: list, k: int, t: int):
+    best_motifs = []
+    for i in range(t):
+        best_motifs.append(dna[i][0:k])
+    n = len(dna[0])
+    for i in range(n-k+1):
+        motifs = []
+        motifs.append(dna[0][i:i+k])
+        for j in range(1, t):
+            p = profile(motifs[0:j])
+            motifs.append(profile_most_probable_kmer(dna[j], k, p))
+        if score(best_motifs) > score(motifs):
+            best_motifs = motifs
+    return best_motifs
 
 # def motifs_entropy(motifs: list):
 
