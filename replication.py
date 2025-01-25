@@ -281,36 +281,3 @@ def visualize_skew(genome: str):
     plt.ylabel('Skew')
     plt.title('Visualisasi Skew Diagram')
     plt.show()
-
-######################################################
-def visualize_ori(genome):
-    array_c = symbol_array(genome, 'C')
-    array_g = symbol_array(genome, 'G')
-    x = [i for i in range(len(array_c))]
-    
-    plt.scatter(x, array_c, label='Cytosine', color='blue', s=0.001)
-    plt.scatter(x, array_g, label='Guaninie', color='red', s=0.001)
-
-    plt.xlabel('Posisi Genome')
-    plt.ylabel('Jumlah Nukleotida')
-    plt.title('Grafik Visualisasi Pencarian Origin of Replication')
-    plt.legend()
-
-    plt.show()
-#######################################################
-
-#######################################################
-def sequence_frequency(text, k, sort_output = True):
-    freq = {}
-    n = len(text)
-    complement = reverse_complement(text)
-    for seq in [text, complement]:
-        for i in range(n-k+1):
-            pattern = seq[i:i+k]
-            freq[pattern] = 0
-    for kmer in freq:
-        freq[kmer] = pattern_count(text, kmer) + pattern_count(complement, kmer)
-    if sort_output:
-        return dict(sorted(freq.items(), key=lambda item: item[1], reverse=True))
-    return freq
-#######################################################

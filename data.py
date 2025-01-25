@@ -22,3 +22,8 @@ def get_e_coli():
     with open('data/E_coli.txt', 'r') as file:
         content = file.read()
         return content
+    
+def get_dosr_motif():
+    with open('data/DosR.txt', 'r') as file:
+        content = file.read()
+        return content.split('\n')
